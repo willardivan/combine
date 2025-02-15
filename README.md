@@ -16,7 +16,7 @@ INSTALLATION
 ------------
 1. Install Go: https://golang.org/doc/install
 2. Run:
-   go install github.com/[YOUR_USERNAME]/combine@latest
+   go install github.com/willardivan/combine@latest
 
 USAGE
 -----
@@ -26,10 +26,10 @@ Basic command:
 Examples:
   # Combine current directory (with confirmation)
   combine -o combined.txt
-  
+
   # Specify directory and output
   combine ./docs -o all_text.md
-  
+
   # Use default output name
   combine ./src
 
