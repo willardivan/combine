@@ -12,6 +12,13 @@ import (
 	"unicode/utf8"
 )
 
+// Version information
+const (
+	Version     = "1.0.0"
+	BuildDate   = "2025-04-05"
+	Description = "A utility to recursively combine text files into a single output file"
+)
+
 // isTextFile checks whether a file appears to be a text file.
 // It reads the first 512 bytes and returns false if a null byte is found
 // or if the data is not valid UTF-8.
@@ -384,6 +391,7 @@ func fileContainsPattern(path, pattern string) bool {
 func main() {
 	// Customize usage information.
 	flag.Usage = func() {
+		fmt.Fprintf(os.Stderr, "Combine %s - %s\n\n", Version, Description)
 		fmt.Fprintf(os.Stderr, "Usage: %s [-o output_file] [-f extensions] [-fe excluded_extensions] [-e excluded_paths] [-p pattern] [-nocompact] [-checkformat] [directory]\n", os.Args[0])
 		fmt.Fprintf(os.Stderr, "\nCombine all text files in a directory (recursively) into a single output file with headers.\n\n")
 		fmt.Fprintf(os.Stderr, "Arguments:\n")
@@ -400,9 +408,18 @@ func main() {
 	pattern := flag.String("p", "", "only include files containing this text pattern")
 	checkFormatFlag := flag.Bool("checkformat", false, "check and display statistics about file formats in the directory")
 	noCompactFlag := flag.Bool("nocompact", false, "don't compress file content to single line (default is to compress)")
+	versionFlag := flag.Bool("v", false, "display version information")
 	
 	// Parse flags
 	flag.Parse()
+	
+	// Handle version flag
+	if *versionFlag {
+		fmt.Printf("Combine %s\n", Version)
+		fmt.Printf("Build date: %s\n", BuildDate)
+		fmt.Printf("%s\n", Description)
+		os.Exit(0)
+	}
 	
 	// Determine the target directory.
 	directory := "."
