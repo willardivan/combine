@@ -8,9 +8,27 @@
 
 <p align="center">
   A powerful Go utility for recursively combining text files from a directory into a single output file with intelligent formatting.
+  <br>
+  <b>Perfect for creating AI/LLM context from source code repositories.</b>
 </p>
 
 ---
+
+## 🤖 Designed for AI/LLM Context
+
+Combine was specifically designed to help developers prepare source code as input context for AI tools and Large Language Models. It addresses several key challenges when working with codebases and AI:
+
+- **Context Window Optimization**: Compresses code to fit more content within limited AI context windows
+- **Structure Preservation**: Maintains code organization with directory trees and indentation markers
+- **Smart Filtering**: Targets only the most relevant files for your AI prompts
+- **Balanced Token Usage**: Format preserves code readability while minimizing token consumption
+- **Noise Reduction**: Automatically excludes binary files, irrelevant directories, and non-code elements
+
+Perfect for:
+- Asking LLMs to analyze specific parts of your codebase
+- Creating comprehensive documentation from code comments
+- Optimizing code review workflows with AI assistants
+- Building custom AI training datasets from source repositories
 
 ## ✨ Features
 
@@ -139,6 +157,50 @@ Filters applied:
 == example/subfolder/file2.txt ==
 [file contents]
 ```
+
+## 🔍 Advanced Use Cases
+
+### AI Code Analysis Workflow
+
+1. **Filter relevant code**:
+   ```bash
+   combine -f py,js -e "node_modules,tests" -o codebase.txt ./src
+   ```
+
+2. **Use in your AI prompt**:
+   ```
+   Analyze this codebase for security vulnerabilities:
+   
+   [Paste content of codebase.txt here]
+   ```
+
+### Finding Implementation Patterns
+
+1. **Collect specific patterns**:
+   ```bash
+   combine -p "API.request" -o api_calls.txt ./src
+   ```
+
+2. **Ask AI to review**:
+   ```
+   Review all these API calls for error handling issues:
+   
+   [Paste content of api_calls.txt here]
+   ```
+
+### Repository Documentation
+
+1. **Extract code with documentation comments**:
+   ```bash
+   combine -p "/**" -o docs.txt ./src
+   ```
+
+2. **Generate markdown documentation**:
+   ```
+   Convert these code comments to markdown documentation:
+   
+   [Paste content of docs.txt here]
+   ```
 
 ## 🤝 Contributing
 
