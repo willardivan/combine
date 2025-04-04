@@ -1,0 +1,14 @@
+├── test_dir/
+│   ├── subdir1/
+│   ├── subdir2/
+│   └── config1.py
+
+Filters applied:
+- Only files containing: "API_KEY"
+
+--------------------------------------------------------------------------------
+
+== config1.py ==
+API_KEY="secret123"
+
+

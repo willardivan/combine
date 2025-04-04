@@ -9,7 +9,10 @@ FEATURES
 - Scans directories recursively
 - Detects text files (UTF-8 valid, no null bytes)
 - Filter files by extension (include or exclude)
-- Shows file format statistics for a directory
+- Exclude specific files or directories from processing (excludes .git by default)
+- Filter files by content with pattern matching
+- Shows file format statistics for a directory (can be combined with filters)
+- Compact mode by default to compress file content into a single line while preserving code structure
 - Excludes output file from processing
 - Interactive confirmation for current directory
 - Preserves relative paths in headers
@@ -24,7 +27,7 @@ INSTALLATION
 USAGE
 -----
 Basic command:
-  combine [-o output.txt] [-f extensions] [-fe excluded_extensions] [-checkformat] [directory]
+  combine [-o output.txt] [-f extensions] [-fe excluded_extensions] [-e excluded_paths] [-p pattern] [-nocompact] [-checkformat] [directory]
 
 Examples:
   # Combine current directory (with confirmation)
@@ -39,15 +42,54 @@ Examples:
   # Exclude specific file types
   combine -fe exe,dll,jpg,png -o no_binaries.txt ./project
 
+  # Exclude specific directories and files (adds to default .git)
+  combine -e "node_modules,dist,.git,temp.txt" -o clean.txt ./project
+  
+  # Only include files containing a specific pattern
+  combine -p "API_KEY" -o api_files.txt ./src
+  
+  # Combine all Python files containing "def main"
+  combine -f py -p "def main" -o main_functions.txt ./src
+  
+  # Output in multi-line format (not compact)
+  combine -nocompact -o readable.txt ./src
+
   # Check file formats in a directory
   combine -checkformat ./src
+  
+  # Check file formats with filters
+  combine -checkformat -f py,js ./src
+  
+  # Check file formats excluding certain directories
+  combine -checkformat -e "node_modules,.git" ./project
+  
+  # Check files containing a specific pattern
+  combine -checkformat -p "import" ./src
 
 FLAGS
 -----
   -o string           Output file name (default "combined_text.txt")
   -f string           Only include files with these extensions (comma-separated, e.g. "py,txt,json")
   -fe string          Exclude files with these extensions (comma-separated, e.g. "exe,jpg,png")
+  -e string           Exclude specific files or directories (comma-separated paths, e.g. "node_modules,dist,temp.txt") (default ".git")
+  -p string           Only include files containing this text pattern
   -checkformat        Check and display statistics about file formats in the directory
+  -nocompact          Don't compress file content to single line (default is to compress)
+
+COMPACT MODE
+------------
+By default, the tool compresses each file to a single line:
+- Preserves code structure using simple indentation with spaces
+- Uses extra spaces to indicate indentation level (more spaces = deeper indentation)
+- Skips empty lines for cleaner output
+- Makes it easier for AI tools to process while keeping code structure visible
+
+To disable compact mode and output the original multiline format, use the -nocompact flag.
+
+Example of compact output:
+```
+def example(): x = 5  if x > 3:   print("Greater than 3")  else:   print("Not greater")
+```
 
 FILE CRITERIA
 -------------
@@ -71,7 +113,9 @@ OUTPUT FORMAT
 # Filter information (if applied)
 Filters applied:
 - Including only: py, js
-- Excluding: exe, dll
+- Excluding extensions: exe, dll
+- Excluding paths: node_modules, .git, temp.txt
+- Only files containing: "API_KEY"
 
 --------------------------------------------------------------------------------
 

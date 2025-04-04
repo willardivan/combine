@@ -1,0 +1,19 @@
+├── test_exclude/
+│   ├── subdir1/
+│   │   └── file2.txt
+│   ├── subdir2/
+│   └── file1.txt
+
+Filters applied:
+- Excluding paths: node_modules, temp.txt
+
+--------------------------------------------------------------------------------
+
+== file1.txt ==
+file1
+
+
+== subdir1/file2.txt ==
+file2
+
+
