@@ -1,0 +1,19 @@
+├── test_dir/
+│   ├── subdir1/
+│   ├── subdir2/
+│   ├── data.json
+│   └── test.py
+
+Filters applied:
+- Excluding: txt, png
+
+--------------------------------------------------------------------------------
+
+== data.json ==
+{"name": "test"}
+
+
+== test.py ==
+print('Hello')
+
+

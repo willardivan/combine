@@ -5,8 +5,11 @@ A Go utility to recursively combine text files from a directory into a single ou
 
 FEATURES
 --------
+- Displays the directory structure as a tree at the beginning of the output file
 - Scans directories recursively
 - Detects text files (UTF-8 valid, no null bytes)
+- Filter files by extension (include or exclude)
+- Shows file format statistics for a directory
 - Excludes output file from processing
 - Interactive confirmation for current directory
 - Preserves relative paths in headers
@@ -21,21 +24,30 @@ INSTALLATION
 USAGE
 -----
 Basic command:
-  combine [directory] -o output.txt
+  combine [-o output.txt] [-f extensions] [-fe excluded_extensions] [-checkformat] [directory]
 
 Examples:
   # Combine current directory (with confirmation)
   combine -o combined.txt
 
   # Specify directory and output
-  combine ./docs -o all_text.md
+  combine -o all_text.md ./docs
 
-  # Use default output name
-  combine ./src
+  # Only include specific file types
+  combine -f py,js,txt -o code_only.txt ./src
+
+  # Exclude specific file types
+  combine -fe exe,dll,jpg,png -o no_binaries.txt ./project
+
+  # Check file formats in a directory
+  combine -checkformat ./src
 
 FLAGS
 -----
-  -o string  Output file name (default "combined_text.txt")
+  -o string           Output file name (default "combined_text.txt")
+  -f string           Only include files with these extensions (comma-separated, e.g. "py,txt,json")
+  -fe string          Exclude files with these extensions (comma-separated, e.g. "exe,jpg,png")
+  -checkformat        Check and display statistics about file formats in the directory
 
 FILE CRITERIA
 -------------
@@ -50,10 +62,23 @@ Files skipped:
 
 OUTPUT FORMAT
 -------------
-== relative/path/file1.txt ==
+# Directory structure displayed at the top
+├── example/
+│   ├── subfolder/
+│   │   └── file2.txt
+│   └── file1.txt
+
+# Filter information (if applied)
+Filters applied:
+- Including only: py, js
+- Excluding: exe, dll
+
+--------------------------------------------------------------------------------
+
+== example/file1.txt ==
 [file contents]
 
-== another/file2.txt ==
+== example/subfolder/file2.txt ==
 [file contents]
 
 POSSIBLE IMPROVEMENTS

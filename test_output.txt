@@ -1,0 +1,22 @@
+├── test_dir/
+│   ├── subdir1/
+│   │   └── file2.txt
+│   ├── subdir2/
+│   │   └── file3.txt
+│   └── file1.txt
+
+
+--------------------------------------------------------------------------------
+
+== file1.txt ==
+This is file 1
+
+
+== subdir1/file2.txt ==
+This is file in subdir1
+
+
+== subdir2/file3.txt ==
+This is file in subdir2
+
+
